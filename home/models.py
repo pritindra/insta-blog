@@ -16,7 +16,7 @@ class Post(models.Model):
 
     @property
     def number_of_comments(self):
-        return Comment.objects.filter(post_connected=self).count()
+        return Comment.objects.filter(post_id=self).count()
 
 
 class Comment(models.Model):
