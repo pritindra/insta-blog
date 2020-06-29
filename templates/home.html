@@ -76,6 +76,7 @@
     </div>
     <div class="container">
 
+      <button type="button" class="btn btn-primary" onclick="window.location.href=''">New post</button>
       <!-- THOUGHT trigger modal -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         Thoughts
@@ -207,7 +208,7 @@
                 
                         </small> -->
                         <small style="opacity: 0.4; margin-left:15px;">
-                            <a href="/post/{{post.id}}/">
+                            <a href="post/{{post.id}}/">
                                 <i style=" font-size: 16px;" class="fa fa-comment"></i> {{ post.number_of_comments }} comment(s)
                             </a>
                             
@@ -225,6 +226,43 @@
         </div>
         </article>
     {% endfor %}
+
+
+    <div class="full-width d-flex justify-content-center">
+    <nav aria-label="">
+      {% if is_paginated %}
+          {% if page_obj.has_previous %}
+            <ul class="pagination">
+              <li>
+              <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                      href="?page=1">First</a>
+              </li>
+              <li> <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                      href="?page={{ page_obj.previous_page_number }}">Previous</a></li> 
+            </ul>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                  <a class="btn btn-sm btn-info mb-4 mr-2"
+                      href="?page={{ num }}">{{ num }}</a>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                  <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                      href="?page={{ num }}">{{ num }}</a>
+              {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+              <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                      href="?page={{ page_obj.next_page_number }}">Next</a>
+                 <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                  href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+          {% endif %}
+      {% endif %}
+    </nav>
+  </div>
+
+    
     <!-- <div class="col-md-6">
       <div class="content-section">
         <h3>Our Sidebar</h3>
