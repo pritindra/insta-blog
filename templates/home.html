@@ -76,7 +76,7 @@
     </div>
     <div class="container">
 
-      <button type="button" class="btn btn-primary" onclick="window.location.href=''">New post</button>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='post/new'">New post</button>
       <!-- THOUGHT trigger modal -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         Thoughts
@@ -188,6 +188,10 @@
                        style="width: 20px; height: 20px;"
                        src="{{ post.author.profile.image.url }}">
                   -->
+                  <a class="mr-2 white-important" >
+                    {{ post.author }}
+                  </a>
+                  
                </div>
                
            </div>
@@ -200,6 +204,12 @@
                 <p class="mb-4">
                     {{ post.content }}
                 </p>
+
+                {% if poll_no is not None %}
+                  <p class="mb-4">
+                    {{ post.poll_no }}:  <input type="radio" name="vote">
+                  </p>
+                {% endif %}
             </a>
 
                 <div class="row">
@@ -208,7 +218,7 @@
                 
                         </small> -->
                         <small style="opacity: 0.4; margin-left:15px;">
-                            <a href="post/{{post.id}}/">
+                            <a href="post/{{post.post_id}}/">
                                 <i style=" font-size: 16px;" class="fa fa-comment"></i> {{ post.number_of_comments }} comment(s)
                             </a>
                             
