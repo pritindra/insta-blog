@@ -37,10 +37,11 @@ class PostListView(LoginRequiredMixin, ListView):
         return data
 
     @login_required
-    def postcreate(request, **kwargs):
+    def postcreate(self, request, **kwargs):
         if request.method == 'POST':
             content = request.POST['message-text']
             poll_no = request.POST['poll_no']
+        return self.get(self, request, **kwargs)
 
     
 
@@ -52,7 +53,7 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        comments_connected = Comment.objects.filter(post_id=self.get_object()).order_by('-date_posted')
+        comments_connected = Comment.objects.filter(post_id=self.get_object()).order_by('-date')
         data['comments'] = comments_connected
         data['form'] = NewCommentForm(instance=self.request.user)
         return data
@@ -70,7 +71,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['content', 'poll_no', 'anon']
-    template_name = 'home.html'
+    template_name = 'post_new.html'
     success_url = '/'
 
     def form_valid(self, form):
